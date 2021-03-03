@@ -1,0 +1,21 @@
+#getting relative frequencey for egyptian data
+qiime taxa collapse \
+  --i-table table.qza \
+  --i-taxonomy taxonomy.qza \
+  --p-level 2 \
+  --o-collapsed-table phyla-table.qza 
+
+qiime feature-table relative-frequency \
+  --i-table phyla-table.qza \
+  --o-realtive-frequency-table rel-phyla-table.qza
+
+qiime tools export \
+  --input-path rel-phyla-table.qza \
+  --output-path rel-table
+
+# first move into the new directory
+cd rel-table
+# note that the table has been automatically labelled feature-table.biom
+# You might want to change this filename for calrity
+biom convert -i feature-table.biom -o rel-phyla-table.tsv --to-tsv
+
